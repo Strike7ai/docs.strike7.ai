@@ -4,9 +4,9 @@ Strike7 documentation hub.
 
 ## Documentation
 
-- [Overview](overview.md) - Introduction and architecture
+- [Overview](overview.md) - Introduction to S7 CLI
 - [Login](login.md) - Authentication and access
 - [Worker](worker.md) - Worker configuration and management
-- [Diagrams](diag.md) - System diagrams
+- [Diagnostic](diag.md) - System Diagnostic
 - [Pentest](pentest.md) - Penetration testing guides
 - [Update](update.md) - Update procedures
