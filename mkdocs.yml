@@ -1,13 +1,12 @@
 site_name: Strike7 Documentation
 site_description: Official documentation for Strike7 platform
 site_author: Strike7 Security
-site_url: https://docs.github.io/docs.strike7.ai/
+site_url: https://strike7ai.github.io/docs.strike7.ai/
 
-# IMPORTANT: keep these simple
 docs_dir: docs
 site_dir: site
 
-repo_name: strike7/docs.strike7.ai
+repo_name: Strike7ai/docs.strike7.ai
 repo_url: https://github.com/Strike7ai/docs.strike7.ai
 edit_uri: edit/main/docs/
 
@@ -75,11 +74,11 @@ nav:
   - Security:
       - CVEs: cves/index.md
   - About:
-      - GitHub: https://github.com/Strike7ai/docs.strike7.ai
+      - GitHub Repo: https://github.com/Strike7ai/docs.strike7.ai
 
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/<ORG_OR_USER>
+      link: https://github.com/Strike7ai
     - icon: fontawesome/brands/linkedin
       link: https://linkedin.com/company/strike7
