@@ -1,7 +1,7 @@
 site_name: Strike7 Documentation
 site_description: Official documentation for Strike7 platform
 site_author: Strike7 Security
-site_url: https://strike7ai.github.io/docs.strike7.ai/
+site_url: https://docs.strike7.ai/
 
 docs_dir: docs
 site_dir: site
