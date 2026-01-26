@@ -1,0 +1,17 @@
+site_name: Strike7 Docs
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: black
+    accent: indigo
+
+nav:
+  - Home: index.md
+  - Overview: overview.md
+  - Login: login.md
+  - Worker: worker.md
+  - Diagrams: diag.md
+  - Pentest: pentest.md
+  - Update: update.md
