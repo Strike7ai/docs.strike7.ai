@@ -156,6 +156,15 @@ s7 striker upgrade <id>
 
 The upgrade fetches fresh ECR credentials from the API, pulls the latest image, and restarts the container.
 
+### Automatic Upgrades
+
+When you run `s7 pentest create`, the CLI automatically checks all locally-installed Strikers for newer images in ECR. If a newer image is found, the Striker is upgraded before the pentest starts — no manual intervention needed.
+
+- Runs silently in the background before each pentest
+- Only recreates the container if the image actually changed
+- Failures are non-blocking (printed as warnings with `-v`)
+- Use `s7 striker upgrade` for manual control when needed
+
 ---
 
 ## Uninstall a Striker
