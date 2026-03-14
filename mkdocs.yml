@@ -1,5 +1,5 @@
 site_name: Strike7 Documentation
-site_description: Official documentation for Strike7 platform
+site_description: Official documentation for the Strike7 autonomous pentesting platform
 site_author: Strike7 Security
 site_url: https://docs.strike7.ai/
 
@@ -67,12 +67,18 @@ plugins:
 
 nav:
   - Home: index.md
-  - Overview: overview.md
-  - Platform:
-      - Agents: agents/index.md
-      - Skills: skills/index.md
-  - Security:
-      - CVEs: cves/index.md
+  - Getting Started:
+      - Installation: installation.md
+      - Authentication: login.md
+      - Configuration: config.md
+  - Striker:
+      - Managing Strikers: striker.md
+  - Pentesting:
+      - Running Pentests: pentest.md
+      - Scope Management: scope.md
+  - Troubleshooting:
+      - Diagnostics: diag.md
+      - Updating: update.md
   - About:
       - GitHub Repo: https://github.com/Strike7ai/docs.strike7.ai
 

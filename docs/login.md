@@ -1,115 +1,125 @@
-# Authentication Commands
+# Authentication
 
-## login
+All S7 CLI commands require authentication. The CLI supports two methods: browser-based OAuth login and API key authentication.
 
-Authenticate with your Strike7 account.
+## Login
 
-### Usage
+### Browser Login (Recommended)
 
-```bash
-s7-cli login [flags]
-```
-
-### Flags
-
-| Flag | Description |
-|------|-------------|
-| `--email` | Email address (optional, will prompt if not provided) |
-| `--password` | Password (optional, will prompt securely) |
-| `--api-key` | API key for non-interactive login |
-
-### Examples
+Opens your default browser for secure OAuth authentication:
 
 ```bash
-# Interactive login (recommended)
-s7-cli login
-
-# Login with email (will prompt for password)
-s7-cli login --email user@company.com
-
-# Login with API key (for CI/CD)
-s7-cli login --api-key sk_live_abc123xyz
+s7 auth login
 ```
 
-### Output
+**Output:**
 
 ```
-Strike7 Login
-Email: user@company.com
-Password: ********
+Opening browser for authentication...
+Waiting for login... (or visit: https://game-redbird-99.clerk.accounts.dev/...)
 
-Success! Logged in as user@company.com
-Organization: Acme Corp
+Logged in successfully (org: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+```
+
+### API Key Login (Headless)
+
+For servers, CI/CD pipelines, or machines without a browser:
+
+```bash
+s7 auth login --api-key sk_abc123...
+```
+
+**Output:**
+
+```
+Validating API key...
+Logged in successfully (org: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+```
+
+!!! tip "API Key Generation"
+    Generate an API key from the Strike7 dashboard under **Settings > API Keys**.
+
+---
+
+## Logout
+
+Remove stored credentials:
+
+```bash
+s7 auth logout
+```
+
+**Output:**
+
+```
+Logged out.
 ```
 
 ---
 
-## logout
+## Status
 
-Log out and clear stored credentials.
-
-### Usage
+Check your current authentication status:
 
 ```bash
-s7-cli logout
+s7 auth status
 ```
 
-### Output
+**Output:**
 
 ```
-Logged out successfully
+Logged in (org: xxxxxxxx-xxxx, type: browser, expires: 2026-04-14 10:30)
 ```
 
 ---
 
-## whoami
+## Whoami
 
-Display information about the currently authenticated user.
-
-### Usage
+Alias for `s7 auth status`:
 
 ```bash
-s7-cli whoami
-```
-
-### Output
-
-```
-Logged in as: user@company.com
-Organization: Acme Corp
-Plan: Enterprise
-API Key: sk_live_***xyz
+s7 auth whoami
 ```
 
 ---
 
-## Configuration File
+## Credential Storage
 
-Credentials are stored in `~/.strike7/config.yaml`:
+Credentials are stored in two files under `~/.s7/`:
 
-```yaml
-api_url: http://129.212.229.32:8001
-api_key: "sk_live_abc123..."
-org_id: "org_xyz789"
-email: "user@company.com"
+| File | Purpose |
+|------|---------|
+| `~/.s7/credentials.json` | Auth token and org ID |
+| `~/.s7/config.yaml` | API URL and org settings |
+
+Both files are created with `0600` permissions (readable only by the owner).
+
+**credentials.json format:**
+
+```json
+{
+  "token": "sk_... or JWT",
+  "orgId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "expiresAt": "2026-04-14T10:30:00Z"
+}
 ```
 
-**Security Note**: The config file is created with `0600` permissions (readable only by the owner).
+---
 
 ## Using API Keys
 
 API keys are recommended for:
+
 - CI/CD pipelines
 - Automated scripts
+- Headless servers and Strikers
 - Service accounts
 
-Generate an API key from the Strike7 dashboard:
-1. Go to Settings → API Keys
-2. Click "Generate New Key"
-3. Copy the key (it won't be shown again)
-
 ```bash
-# Use in scripts
-export S7_API_KEY=sk_live_abc123xyz
-s7-cli pentest list
+# Set API key and use the CLI
+s7 auth login --api-key sk_abc123...
+s7 pentest list
 ```
+
+!!! warning "Security"
+    Keep your API key secure. It provides full access to your organization's pentests and Strikers.

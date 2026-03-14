@@ -1,91 +1,58 @@
-# Update Command
+# Updating the CLI
 
-Keep your CLI up to date with the latest features and fixes.
+Keep your S7 CLI up to date to get the latest features and bug fixes.
 
-## update
-
-Update s7-cli to the latest version.
-
-### Usage
+## Check for Updates
 
 ```bash
-s7-cli update [flags]
+s7 update --check
 ```
 
-### Flags
+**Output (update available):**
 
-| Flag | Description |
-|------|-------------|
-| `--check` | Only check for updates, don't install |
+```
+Update available: 1.0.0 → 1.1.0
+Run 's7 update' to install.
+```
 
-### Examples
+**Output (up to date):**
+
+```
+Up to date: 1.1.0
+```
+
+---
+
+## Update to Latest
 
 ```bash
-# Check for updates
-s7-cli update --check
-
-# Update to latest version
-s7-cli update
-
-# Update with sudo (if installed in /usr/local/bin)
-sudo s7-cli update
+s7 update
 ```
 
-### Output
+**Output:**
 
 ```
-Current version: 1.0.0
-OS/Arch: darwin/arm64
-
-Checking for updates... latest: 1.0.1
-
-New version available: 1.0.0 -> 1.0.1
-
-Downloading s7-cli-darwin-arm64...
-Downloaded: 11.45 MB
-Verifying new binary... OK
-  s7-cli version 1.0.1
-Installing update... OK
-
-Success! Updated successfully!
-  1.0.0 -> s7-cli version 1.0.1
+Updated: 1.0.0 → 1.1.0
 ```
 
-### Already Up to Date
+If the CLI is installed in `/usr/local/bin` and you don't have write permissions:
 
-```
-Current version: 1.0.1
-OS/Arch: darwin/arm64
-
-Checking for updates... latest: 1.0.1
-
-Up to date! You're already on the latest version!
+```bash
+sudo s7 update
 ```
 
 ---
 
 ## Manual Update
 
-If the update command fails or you have an older version without it:
-
-### macOS / Linux
+If the update command fails or you have a very old version:
 
 ```bash
 # Remove old version
-sudo rm -f /usr/local/bin/s7-cli
+sudo rm -f /usr/local/bin/s7
 
-# Download and install new version
-curl -fsSL http://129.212.229.32:8001/downloads/install.sh | bash
-```
-
-### Windows (PowerShell)
-
-```powershell
-# Remove old version
-Remove-Item $env:USERPROFILE\s7-cli.exe -ErrorAction SilentlyContinue
-
-# Download new version
-Invoke-WebRequest -Uri "http://129.212.229.32:8001/downloads/cli/s7-cli-windows-amd64.exe" -OutFile "$env:USERPROFILE\s7-cli.exe"
+# Download and install latest
+curl -sL https://get.strike7.ai | bash
 ```
 
 ---
@@ -93,15 +60,17 @@ Invoke-WebRequest -Uri "http://129.212.229.32:8001/downloads/cli/s7-cli-windows-
 ## Version Information
 
 ```bash
-# Check current version
-s7-cli version
+s7 version
+```
 
-# Output
-s7-cli version 1.0.1
+**Output:**
+
+```
+s7 version 1.1.0 (commit: abc1234, built: 2026-03-14)
 ```
 
 ---
 
 ## Changelog
 
-View release notes at: https://github.com/strike7ai/s7-cli/releases
+View release notes at the [S7 CLI releases page](https://github.com/Strike7ai/s7-cc/releases).
