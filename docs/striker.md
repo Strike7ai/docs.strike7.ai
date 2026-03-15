@@ -156,14 +156,44 @@ s7 striker upgrade <id>
 
 The upgrade fetches fresh ECR credentials from the API, pulls the latest image, and restarts the container.
 
-### Automatic Upgrades
+### Automatic Updates (Watchtower)
 
-When you run `s7 pentest create`, the CLI automatically checks all locally-installed Strikers for newer images in ECR. If a newer image is found, the Striker is upgraded before the pentest starts — no manual intervention needed.
+Every Striker installation includes a **Watchtower** sidecar that automatically pulls and applies new images from ECR. This works regardless of how pentests are triggered — CLI, SaaS dashboard, or API.
+
+**How it works:**
+
+1. **Watchtower** polls ECR every 5 minutes for new Striker images
+2. **ecr-login** refreshes ECR authentication tokens every 6 hours (using pull-only IAM credentials)
+3. When a new image is detected, Watchtower performs a **rolling restart** — pulling the new image and recreating the Striker container
+4. Tailscale VPN state is preserved across restarts (persisted volume)
+
+**Key details:**
+
+- Zero-downtime updates via rolling restart (~15-30 seconds during container swap)
+- Label-scoped: Watchtower only manages your Striker container, not other Docker workloads
+- ECR credentials are pull-only (cannot push or modify images)
+- No inbound ports required — all polling is outbound HTTPS
+
+**Services running per Striker:**
+
+| Service | Purpose |
+|---------|---------|
+| `s7-striker-<id>` | Pentest execution engine + VPN client |
+| `s7-watchtower-<id>` | Polls ECR for new images, auto-restarts |
+| `s7-ecr-login-<id>` | Refreshes ECR auth tokens (if ECR creds provided) |
+
+### CLI Auto-Upgrade
+
+When you run `s7 pentest create`, the CLI also checks locally-installed Strikers for newer images. If a newer image is found, the Striker is upgraded before the pentest starts.
 
 - Runs silently in the background before each pentest
 - Only recreates the container if the image actually changed
 - Failures are non-blocking (printed as warnings with `-v`)
 - Use `s7 striker upgrade` for manual control when needed
+
+### Upgrading Existing Strikers
+
+If you installed a Striker before auto-update was available, running `s7 striker upgrade <id>` will automatically add the Watchtower sidecar to your installation.
 
 ---
 
